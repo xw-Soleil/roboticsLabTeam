@@ -92,6 +92,7 @@
   title1-size: font-size.n4,
   title2-size: font-size.s4,
   title3-size: font-size.n5,
+  title4-size: font-size.n5,
   text-size: font-size.n5,
   author-size: font-size.n5,
   // 字体设置
@@ -452,15 +453,10 @@
   // 元素样式
   // ================================
 
-  // 数学公式：无标签则不编号
+  // 数学公式：自动编号
   show math.equation: it => {
     set block(breakable: true)
-    if it.block and not it.has("label") [
-      #counter(math.equation).update(v => v - 1)
-      #math.equation(it.body, block: true, numbering: none)#label("")
-    ] else {
-      it
-    }
+    it
   }
 
   // 图表样式
