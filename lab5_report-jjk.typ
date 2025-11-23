@@ -6,13 +6,14 @@
 #show: project.with(
   title: "实验5：世界坐标系下的轨迹规划",
   author: "第3组 金加康 吴必兴 沈学文 钱满亮 赵钰泓",
-  date: auto,
+  // date: auto,
   cover_name: "实验5：世界坐标系下的轨迹规划",
   cover_subname: "机器人技术与实践实验报告",
   school_id: "第三组",
   course: "机器人技术与实践",
   teacher: "周春琳",
   cover_date:"2025年11月23日",
+  author_cover:"金加康 吴必兴 沈学文 钱满亮 赵钰泓"
   
   // abstract: [基于ZJU-I型机械臂的笛卡尔空间轨迹规划实验。],
   // keywords: ("机械臂", "轨迹规划", "笛卡尔空间"),
@@ -91,6 +92,8 @@
     caption: [机械臂坐标系示意图],
   ),
 )
+
+#pagebreak()
 = 基于速度控制的轨迹规划
 
 == 结果与分析
@@ -100,7 +103,7 @@
 下图展示了机械臂末端执行器沿正方形轨迹运动的结果。使用速度控制方法，末端执行器准确地沿着边长为10cm的正方形路径运动，红色轨迹线清晰地显示了运动路径：
 #v(-0.5em)
 #figure(
-  image("images/velocityCtrl/square.png", width: 62.5%),
+  image("images/velocityCtrl/square.png", width: 65%),
   caption: [正方形轨迹运动结果 ｜ 速度控制],
 )
 下图为正方形轨迹运动时的关节运动曲线：
@@ -108,7 +111,7 @@
 #v(-0.5em)
 #figure(
   box(
-    width: 75%,
+    width: 85%,
     grid(
       columns: (1fr, 1fr),
       column-gutter: 2mm,
@@ -129,7 +132,7 @@
 下图展示了机械臂末端执行器沿圆形轨迹运动的结果。红色圆圈清晰地显示了末端执行器的运动轨迹，直径约为10cm：
 #v(-1em)
 #figure(
-  image("images/velocityCtrl/circle.png", width: 40%),
+  image("images/velocityCtrl/circle.png", width: 65%),
   caption: [圆形轨迹运动结果 ｜ 速度控制],
 )
 #v(-0.5em)
@@ -137,7 +140,7 @@
 
 #figure(
   box(
-    width: 75%,
+    width: 85%,
     grid(
       columns: (1fr, 1fr),
       column-gutter: 2mm,
@@ -158,7 +161,7 @@
 下图展示了机械臂末端执行器绕固定点作圆锥运动的结果。从图中可以看出，末端执行器的轴线与圆锥素线重合，末端点保持固定：
 #v(-1em)
 #figure(
-  image("images/velocityCtrl/cone.png", width: 40%),
+  image("images/velocityCtrl/cone.png", width:65%),
   caption: [圆锥轨迹运动结果 ｜ 速度控制],
 )
 #v(-0.5em)
@@ -166,7 +169,7 @@
 #v(-0.5em)
 #figure(
   box(
-    width: 75%,
+    width: 85%,
     grid(
       columns: (1fr, 1fr),
       column-gutter: 2mm,
@@ -184,7 +187,7 @@
 + *周期性变化*：各关节速度呈现周期性变化，周期约为18秒（$360degree div 20degree\/s$），与给定的旋转角速度一致。
 
 
-== 实验内容与原理
+== 理论分析与计算
 
 === Jacobian矩阵的定义
 
@@ -854,14 +857,10 @@ python setup.py build_ext --inplace
 + 阻尼最小二乘求解
   + *实现原理*：$dot(bold(q)) = bold(J)^T (bold(J) bold(J)^T + lambda^2 bold(I))^(-1) dot(bold(x))$，使用此公式来求逆从而进行逆运动学求解
   + *实现方式*：使用 `np.linalg.solve` 求解线性方程组 $(bold(J) bold(J)^T + lambda^2 bold(I)) bold(z) = dot(bold(x))$，然后计算 $dot(bold(q)) = bold(J)^T bold(z)$，比直接求逆更稳定
-  + *阻尼系数*：$lambda = 0.01$ 是经验值，在此次仿真中效果较好。阻尼项 $lambda^2 bold(I)$ 防止了雅可比矩阵接近奇异时的数值不稳定
-
-+ 速度与位置限制
-  + *速度限幅*：检查每个关节的计算速度是否超过硬件限制（100°/s），超过时按比例缩放到限制值的90%
-  + *软限位保护*：当关节位置接近运动范围边界（留10°安全裕度）且速度方向朝向边界时，将速度缩减为10%，实现平滑减速
-  + *参数设定*：速度限幅时乘以0.9、软限位时乘以0.1
+  + *阻尼系数*：阻尼项 $lambda^2 bold(I)$ 防止了雅可比矩阵接近奇异时的数值不稳定
 
 
+#pagebreak()
 = 基于位置控制的轨迹规划
 
 == 结果与分析
@@ -871,15 +870,15 @@ python setup.py build_ext --inplace
 下图展示了机械臂末端执行器沿正方形轨迹运动的结果。从仿真截图可以看出，末端执行器准确地沿着边长为10cm的正方形路径运动，绿色轨迹线清晰地显示了运动路径：
 #v(-0.5em)
 #figure(
-  image("images/（位置控制）正方形结果.png", width: 62.5%),
-  caption: [正方形轨迹运动结果],
+  image("images/（位置控制）正方形结果.png", width: 55%),
+  caption: [正方形轨迹运动结果 | 位置控制],
 )
 
 下图为机械臂运动时各关节的位置、速度和加速度变化曲线：
 #v(-0.5em)
 #figure(
   image("images/（位置控制）正方形曲线.png", width: 100%),
-  caption: [正方形轨迹的关节运动曲线],
+  caption: [正方形轨迹的关节运动曲线 | 位置控制],
 )
 #v(-0.5em)
 从曲线可以观察到：
@@ -892,15 +891,15 @@ python setup.py build_ext --inplace
 下图展示了机械臂末端执行器沿圆形轨迹运动的结果。绿色圆圈清晰地显示了末端执行器的运动轨迹，直径约为10cm：
 #v(-1em)
 #figure(
-  image("images/（位置控制）圆形结果.png", width: 40%),
-  caption: [圆形轨迹运动结果],
+  image("images/（位置控制）圆形结果.png", width: 55%),
+  caption: [圆形轨迹运动结果 | 位置控制],
 )
 #v(-0.5em)
 下图为圆形轨迹运动时的关节运动曲线：
 
 #figure(
   image("images/（位置控制）圆形曲线.png", width: 100%),
-  caption: [圆形轨迹的关节运动曲线],
+  caption: [圆形轨迹的关节运动曲线 | 位置控制],
 )
 
 圆形轨迹的运动特点：
@@ -913,15 +912,15 @@ python setup.py build_ext --inplace
 下图展示了机械臂末端执行器绕固定点作圆锥运动的结果。从图中可以看出，末端执行器的轴线与圆锥素线重合，末端点保持固定：
 #v(-1em)
 #figure(
-  image("images/（位置控制）圆锥结果.png", width: 40%),
-  caption: [圆锥轨迹运动结果],
+  image("images/（位置控制）圆锥结果.png", width: 55%),
+  caption: [圆锥轨迹运动结果 | 位置控制],
 )
 #v(-0.5em)
 下图为圆锥轨迹运动时的关节运动曲线：
 #v(-0.5em)
 #figure(
   image("images/（位置控制）圆锥曲线.png", width: 100%),
-  caption: [圆锥轨迹的关节运动曲线],
+  caption: [圆锥轨迹的关节运动曲线 | 位置控制],
 )
 #v(-0.5em)
 圆锥轨迹的特点：
@@ -929,7 +928,7 @@ python setup.py build_ext --inplace
 + *速度分布*：各关节速度呈现周期性变化，其中关节1和关节3的速度变化最为显著。
 + *加速度峰值*：在约10秒时刻，关节5出现了较大的加速度峰值（超过100 deg/s²），但仍在安全限制（500 deg/s²）范围内。
 
-== 实验内容与原理
+== 理论分析与计算
 
 === 坐标系与运动学
 + 在机械臂轨迹规划中，涉及两种主要的坐标系：

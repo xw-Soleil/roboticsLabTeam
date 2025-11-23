@@ -357,6 +357,7 @@
   place: none,
   teacher: none,
   cover_date: none,
+  author_cover:none,
   body,
 ) = {
   // 文档设置
@@ -509,37 +510,6 @@
   // )
 
   // 添加
-  set page(numbering: "1 / 1")
-
-  // 添加页眉和页脚
-  set page(
-    header: context {
-      set text(font: config.header-font)
-      grid(
-        columns: (1fr, 1fr),
-        align(left, title), align(right, counter(page).display("1 / 1", both: true)),
-      )
-      v(-1.2em)
-      line(stroke: 1pt + gray, length: 100%)
-    },
-    footer: context {
-      set text(font: config.header-font)
-      let headings = query(heading.where(level: 1, outlined: true).before(here()))
-      if headings.len() == 0 {
-        return
-      }
-      let level = counter(heading.where(level: 1)).display("1")
-      let heading = level + h(config.small-space) + text(size: config.text-size)[#headings.last().body]
-
-      line(stroke: 1pt + gray, length: 100%)
-      v(-1.2em)
-      grid(
-        columns: (1fr, 1fr),
-        align(left, author), align(right, heading),
-      )
-    },
-  )
-
   set page(numbering: none)
     v(1fr)
     align(center, image("../images/ZJU-Banner2.png", width: 100%))
@@ -560,9 +530,9 @@
       rows.push("实验名称")
       rows.push(name)
     }
-    if (author != none) {
+    if (author_cover != none) {
       rows.push([小组成员])
-      rows.push(author)
+      rows.push(author_cover)
     }
     if (school_id != none) {
       rows.push([组$space.quad space.quad$号])
@@ -610,7 +580,39 @@
       ],
     )
     v(2fr)
-    pagebreak()
+  pagebreak()
+  set page(numbering: "1 / 1")
+
+  // 添加页眉和页脚
+  set page(
+    header: context {
+      set text(font: config.header-font)
+      grid(
+        columns: (1fr, 1fr),
+        align(left, title), align(right, counter(page).display("1 / 1", both: true)),
+      )
+      v(-1.2em)
+      line(stroke: 1pt + gray, length: 100%)
+    },
+    footer: context {
+      set text(font: config.header-font)
+      let headings = query(heading.where(level: 1, outlined: true).before(here()))
+      if headings.len() == 0 {
+        return
+      }
+      let level = counter(heading.where(level: 1)).display("1")
+      let heading = level + h(config.small-space) + text(size: config.text-size)[#headings.last().body]
+
+      line(stroke: 1pt + gray, length: 100%)
+      v(-1.2em)
+      grid(
+        columns: (1fr, 1fr),
+        align(left, author), align(right, heading),
+      )
+    },
+  )
+
+  
     
 
     show outline.entry.where(level: 1): it => {
