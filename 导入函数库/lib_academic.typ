@@ -7,7 +7,7 @@
 #import "@preview/showybox:2.0.4": showybox
 #import "@preview/codly:1.3.0": *            // 导入codly包
 #import "@preview/codly-languages:0.1.7": *  // 导入codly配套包codly-languages
-
+#import "@preview/tablex:0.0.9": tablex, colspanx, rowspanx, hlinex, vlinex, cellx
 #let my_red = rgb("#c00000")
 #let my_green = rgb("#00c000")
 #let my_blue = rgb("#0622f1")
@@ -27,7 +27,6 @@
 // ================================
 // 字体配置
 // ================================
-
 #let font = (
   // 中文字体
   zh_shusong: "SimSun",
@@ -42,7 +41,6 @@
   en_typewriter: "Courier New",
   en_code: "Consolas",
 )
-
 // ================================
 // 字号配置
 // ================================
@@ -61,6 +59,31 @@
 // ================================
 // 样式配置
 // ================================
+// 
+
+#let fakebold(content) = {
+  set text(stroke: 0.02857em) // https://gist.github.com/csimide/09b3f41e838d5c9fc688cc28d613229f
+  content
+}
+
+
+
+#let _underlined_cell(content, color: black) = {
+  tablex(
+    align: center + horizon,
+    stroke: 0pt,
+    inset: 0.75em,
+    map-hlines: h => {
+      if (h.y > 0) {
+        (..h, stroke: 0.5pt + color)
+      } else {
+        h
+      }
+    },
+    columns: 1fr,
+    content,
+  )
+}
 
 #let config = (
   // 字号设置
@@ -322,6 +345,15 @@
   date: none,
   abstract: none,
   keywords: (),
+  cover_name: "浙江大学课程实验报告模板",
+  cover_subname: "ZJU Academic Report Template",
+  course: none,
+  name: none,
+  school_id: none,
+  college: none,
+  major: none,
+  place: none,
+  teacher: none,
   body,
 ) = {
   // 文档设置
@@ -510,6 +542,79 @@
     },
   )
 
+  set page(numbering: none)
+    v(1fr)
+    align(center, image("../images/ZJU-Banner2.png", width: 100%))
+    align(center)[
+      #set text(size: 26pt)
+      #fakebold[#cover_name]
+      #v(0.5cm)
+      #set text(size: 17pt)
+      #cover_subname
+    ]
+    v(2fr)
+    let rows = ()
+    if (course != none) {
+      rows.push("课程名称")
+      rows.push(course)
+    }
+    if (name != none) {
+      rows.push("实验名称")
+      rows.push(name)
+    }
+    if (author != none) {
+      rows.push([小组成员])
+      rows.push(author)
+    }
+    if (school_id != none) {
+      rows.push([组$space.quad space.quad$号])
+      rows.push(school_id)
+    }
+    if (college != none) {
+      rows.push([学$space.quad space.quad$院])
+      rows.push(college)
+    }
+    if (major != none) {
+      rows.push([专$space.quad space.quad$业])
+      rows.push(major)
+    }
+    if (place != none) {
+      rows.push([实验地点])
+      rows.push(place)
+    }
+    if (teacher != none) {
+      rows.push([指导教师])
+      rows.push(teacher)
+    }
+    if (date != none) {
+      rows.push([报告日期])
+      rows.push(date)
+    }
+    align(
+      center,
+      box(width: 75%)[
+        #set text(size: 1.2em)
+        #tablex(
+          columns: (6.5em + 5pt, 1fr),
+          align: center + horizon,
+          stroke: 0pt,
+          // stroke: 0.5pt + red, // this line is just for testing
+          inset: 1pt,
+          map-cells: cell => {
+            if (cell.x == 0) {
+              _underlined_cell([#cell.content#"："], color: white)
+            } else {
+              _underlined_cell(cell.content, color: black)
+            }
+          },
+          ..rows,
+        )
+      ],
+    )
+    v(2fr)
+    
+    pagebreak()
+
   make-title(
     title: title,
     author: author,
@@ -517,6 +622,7 @@
     abstract: abstract,
     keywords: keywords,
   )
+  
 
   // 正文内容
   body
