@@ -28,18 +28,19 @@
 // 字体配置
 // ================================
 #let font = (
-  // 中文字体
-  zh_shusong: "SimSun",
-  zh_zhongsong: "STZhongsong",
-  zh_kai: "KaiTi",
-  zh_hei: "SimHei",
-  zh_fangsong: "STFangsong",
-  zh_handwriting: "AaTMKASXZ",
+  // 中文字体 - 使用你系统中已有的
+  zh_shusong: "Source Han Serif SC VF",    // 思源宋体（已安装）
+  zh_zhongsong: "STSong",                  // 华文中宋（已有）
+  zh_kai: "Kaiti SC",                      // 楷体（已有）
+  zh_hei: "Source Han Sans SC VF",         // 思源黑体（已安装）
+  zh_fangsong: "STFangsong",               // 华文仿宋（已有）
+  zh_handwriting: "HanziPen SC",           // 翩翩体手写字（已有）
+  
   // 英文字体
-  en_sans_serif: "New Computer Modern",
-  en_serif: "New Computer Modern",
-  en_typewriter: "Courier New",
-  en_code: "Consolas",
+  en_sans_serif: "Helvetica Neue",      // 系统自带
+  en_serif: "Times New Roman",          // 系统自带
+  en_typewriter: "Courier New",         // 系统自带
+  en_code: "Menlo",                     // 系统自带的编程字体
 )
 // ================================
 // 字号配置
