@@ -355,6 +355,7 @@
   major: none,
   place: none,
   teacher: none,
+  cover_date: none,
   body,
 ) = {
   // 文档设置
@@ -587,9 +588,9 @@
       rows.push([指导教师])
       rows.push(teacher)
     }
-    if (date != none) {
+    if (cover_date != none) {
       rows.push([报告日期])
-      rows.push(date)
+      rows.push(cover_date)
     }
     align(
       center,
@@ -613,7 +614,15 @@
       ],
     )
     v(2fr)
+    pagebreak()
     
+
+    show outline.entry.where(level: 1): it => {
+      v(12pt, weak: true)
+      strong(it)
+    }
+
+    outline(indent: 2em)
     pagebreak()
 
   make-title(

@@ -7,6 +7,13 @@
   title: "实验5：世界坐标系下的轨迹规划",
   author: "第3组 金加康 吴必兴 沈学文 钱满亮 赵钰泓",
   date: auto,
+  cover_name: "实验5：世界坐标系下的轨迹规划",
+  cover_subname: "机器人技术与实践实验报告",
+  school_id: "第三组",
+  course: "机器人技术与实践",
+  teacher: "周春琳",
+  cover_date:"2025年11月23日",
+  
   // abstract: [基于ZJU-I型机械臂的笛卡尔空间轨迹规划实验。],
   // keywords: ("机械臂", "轨迹规划", "笛卡尔空间"),
 )
@@ -122,6 +129,43 @@
 + #reder[实现简洁]：速度控制下，圆锥运动的实现非常简单——只需给定一个恒定的角速度向量 $bold(omega) = [0, 0, 20degree\/s]^T$，无需复杂的姿态规划。
 + #reder[与位置控制对比]：位置控制需要计算圆锥面上每个点的姿态、优化自旋角、处理多解选择等复杂问题；而速度控制只需给定角速度即可，体现了速度控制的灵活性优势。
 + #reder[周期性运动]：各关节速度呈现周期性变化，周期约为18秒（$360degree div 20degree\/s$），与给定的旋转角速度完全吻合。
+
+
+== 实验内容与原理
+
+
+=== Jacobian矩阵的定义
+
+Jacobian矩阵建立了机械臂#bluer[关节速度]与#bluer[末端速度]之间的线性映射关系：
+#v(-0.5em)
+$
+  dot(bold(x)) = bold(J)(bold(q)) dot(bold(q))
+$ <eq1>
+#v(-0.5em)
+其中：
++ $dot(bold(x)) = mat(bold(v); bold(omega)) in RR^6$ 是末端执行器的#reder[速度旋量]：
+  - $bold(v) = [v_x, v_y, v_z]^T$ 为线速度（m/s）
+  - $bold(omega) = [omega_x, omega_y, omega_z]^T$ 为角速度（rad/s）
++ $bold(J)(bold(q)) in RR^(6 times 6)$ 是#reder[几何Jacobian矩阵]，是关节角 $bold(q)$ 的函数
++ $dot(bold(q)) = [dot(theta)_1, dot(theta)_2, ..., dot(theta)_6]^T in RR^6$ 是关节角速度向量
+
+Jacobian矩阵的结构为：
+#v(-0.5em)
+$
+  bold(J)(bold(q)) = mat(
+    bold(J)_v;
+    bold(J)_omega
+  ) = mat(
+    J_(v_x 1), J_(v_x 2), ..., J_(v_x 6);
+    J_(v_y 1), J_(v_y 2), ..., J_(v_y 6);
+    J_(v_z 1), J_(v_z 2), ..., J_(v_z 6);
+    J_(omega_x 1), J_(omega_x 2), ..., J_(omega_x 6);
+    J_(omega_y 1), J_(omega_y 2), ..., J_(omega_y 6);
+    J_(omega_z 1), J_(omega_z 2), ..., J_(omega_z 6)
+  )
+$ <eq2>
+#v(-0.5em)
+上半部分 $bold(J)_v$ 描述线速度映射，下半部分 $bold(J)_omega$ 描述角速度映射。
 
 
 = 基于位置控制的轨迹规划
