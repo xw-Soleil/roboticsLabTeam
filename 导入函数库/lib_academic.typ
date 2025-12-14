@@ -635,3 +635,248 @@
   // 正文内容
   body
 }
+
+
+
+#let blockx(it, name: "", color: red, theme: none) = {
+  context {
+
+{
+      let _inset = 0.8em
+      let _color = color.darken(5%)
+      v(0.2em)
+      block(below: 1em, stroke: 0.5pt + _color, radius: 3pt, width: 100%, inset: _inset)[
+        #place(
+          top + left,
+          dy: -6pt - _inset, // Account for inset of block
+          dx: 8pt - _inset,
+          block(fill: white, inset: 2pt)[
+            #set text(font: "Noto Sans", fill: _color)
+            #name
+          ],
+        )
+        #set text(fill: _color)
+        #set par(first-line-indent: 0em)
+        #it
+      ]
+    } 
+  }
+}
+
+#let Theorem(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Theorem")
+  },
+  color: rgb(0, 90, 239),
+)
+
+#let example(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Example")
+  },
+  color: gray.darken(60%),
+)
+#let proof(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Proof")
+  },
+  color: rgb(120, 120, 120),
+)
+#let abstract(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Abstract")
+  },
+  color: rgb(0, 133, 143),
+)
+#let summary(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Summary")
+  },
+  color: rgb(0, 133, 143),
+)
+#let info(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Info")
+  },
+  color: rgb(68, 115, 218),
+)
+#let note(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Note")
+  },
+  color: rgb(68, 115, 218),
+)
+#let tip(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Tip")
+  },
+  color: rgb(0, 133, 91),
+)
+#let hint(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Hint")
+  },
+  color: rgb(0, 133, 91),
+)
+#let success(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Success")
+  },
+  color: rgb(62, 138, 0),
+)
+#let important(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Important")
+  },
+  color: rgb(62, 138, 0),
+)
+#let help(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Help")
+  },
+  color: rgb(153, 110, 36),
+)
+#let warning(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Warning")
+  },
+  color: rgb(184, 95, 0),
+)
+#let attention(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Attention")
+  },
+  color: rgb(216, 58, 49),
+)
+#let caution(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Caution")
+  },
+  color: rgb(216, 58, 49),
+)
+#let failure(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Failure")
+  },
+  color: rgb(216, 58, 49),
+)
+#let danger(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Danger")
+  },
+  color: rgb(216, 58, 49),
+)
+#let error(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Error")
+  },
+  color: rgb(216, 58, 49),
+)
+#let bug(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Bug")
+  },
+  color: rgb(204, 51, 153),
+)
+#let quote(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Quote")
+  },
+  color: rgb(132, 90, 231),
+)
+#let Cite(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Cite")
+  },
+  color: rgb(132, 90, 231),
+)
+#let experiment(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Experiment")
+  },
+  color: rgb(132, 90, 231),
+)
+#let question(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Question")
+  },
+  color: rgb(132, 90, 231),
+)
+#let analysis(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Analysis")
+  },
+  color: rgb(0, 133, 91),
+)
