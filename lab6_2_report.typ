@@ -1,11 +1,11 @@
-#import "导入函数库/lib_academic.typ": *
+#import "导入函数库/lib_academic2.typ": *
 #show: codly-init.with()    // 初始化codly，每个文档只需执行一次
 #codly(languages: codly-languages)  // 配置codly
 #show table: three-line-table
 
 #show: project.with(
   title: "实验6：机械臂实物实验-物块抓取搬运任务",
-  author: "第3组 金加康 吴必兴 沈学文 钱满亮 赵钰泓",
+  author: "第3组 金加康 吴必兴 沈学文 钱满亮 赵钰泓 项科深",
   // date: auto,
   cover_name: "机械臂实物实验-物块抓取搬运任务",
   cover_subname: "机器人技术与实践实验报告",
@@ -13,7 +13,7 @@
   course: "机器人技术与实践",
   teacher: "周春琳",
   cover_date: "2025年12月15日",
-  author_cover: "金加康 吴必兴 沈学文 钱满亮 赵钰泓",
+  author_cover: "金加康 吴必兴 沈学文 钱满亮 赵钰泓 项科深",
 
   // abstract: [基于ZJU-I型机械臂的笛卡尔空间轨迹规划实验。],
   // keywords: ("机械臂", "轨迹规划", "笛卡尔空间"),
