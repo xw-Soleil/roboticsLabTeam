@@ -7,7 +7,7 @@
 #import "@preview/showybox:2.0.4": showybox
 #import "@preview/codly:1.3.0": *            // 导入codly包
 #import "@preview/codly-languages:0.1.7": *  // 导入codly配套包codly-languages
-#import "@preview/tablex:0.0.9": tablex, colspanx, rowspanx, hlinex, vlinex, cellx
+#import "@preview/tablex:0.0.9": cellx, colspanx, hlinex, rowspanx, tablex, vlinex
 #let my_red = rgb("#c00000")
 #let my_green = rgb("#00c000")
 #let my_blue = rgb("#0622f1")
@@ -60,7 +60,7 @@
 // ================================
 // 样式配置
 // ================================
-// 
+//
 
 #let fakebold(content) = {
   set text(stroke: 0.02857em) // https://gist.github.com/csimide/09b3f41e838d5c9fc688cc28d613229f
@@ -357,7 +357,7 @@
   place: none,
   teacher: none,
   cover_date: none,
-  author_cover:none,
+  author_cover: none,
   body,
 ) = {
   // 文档设置
@@ -511,75 +511,75 @@
 
   // 添加
   set page(numbering: none)
-    v(1fr)
-    align(center, image("../images/ZJU-Banner2.png", width: 100%))
-    align(center)[
-      #set text(size: 26pt)
-      #fakebold[#cover_name]
-      #v(0.5cm)
-      #set text(size: 17pt)
-      #cover_subname
-    ]
-    v(2fr)
-    let rows = ()
-    if (course != none) {
-      rows.push("课程名称")
-      rows.push(course)
-    }
-    if (name != none) {
-      rows.push("实验名称")
-      rows.push(name)
-    }
-    if (author_cover != none) {
-      rows.push([小组成员])
-      rows.push(author_cover)
-    }
-    if (school_id != none) {
-      rows.push([组$space.quad space.quad$号])
-      rows.push(school_id)
-    }
-    if (college != none) {
-      rows.push([学$space.quad space.quad$院])
-      rows.push(college)
-    }
-    if (major != none) {
-      rows.push([专$space.quad space.quad$业])
-      rows.push(major)
-    }
-    if (place != none) {
-      rows.push([实验地点])
-      rows.push(place)
-    }
-    if (teacher != none) {
-      rows.push([指导教师])
-      rows.push(teacher)
-    }
-    if (cover_date != none) {
-      rows.push([报告日期])
-      rows.push(cover_date)
-    }
-    align(
-      center,
-      box(width: 75%)[
-        #set text(size: 1.2em)
-        #tablex(
-          columns: (6.5em + 5pt, 1fr),
-          align: center + horizon,
-          stroke: 0pt,
-          // stroke: 0.5pt + red, // this line is just for testing
-          inset: 1pt,
-          map-cells: cell => {
-            if (cell.x == 0) {
-              _underlined_cell([#cell.content#"："], color: white)
-            } else {
-              _underlined_cell(cell.content, color: black)
-            }
-          },
-          ..rows,
-        )
-      ],
-    )
-    v(2fr)
+  v(1fr)
+  align(center, image("../images/ZJU-Banner2.png", width: 100%))
+  align(center)[
+    #set text(size: 26pt)
+    #fakebold[#cover_name]
+    #v(0.5cm)
+    #set text(size: 17pt)
+    #cover_subname
+  ]
+  v(2fr)
+  let rows = ()
+  if (course != none) {
+    rows.push("课程名称")
+    rows.push(course)
+  }
+  if (name != none) {
+    rows.push("实验名称")
+    rows.push(name)
+  }
+  if (author_cover != none) {
+    rows.push([小组成员])
+    rows.push(author_cover)
+  }
+  if (school_id != none) {
+    rows.push([组$space.quad space.quad$号])
+    rows.push(school_id)
+  }
+  if (college != none) {
+    rows.push([学$space.quad space.quad$院])
+    rows.push(college)
+  }
+  if (major != none) {
+    rows.push([专$space.quad space.quad$业])
+    rows.push(major)
+  }
+  if (place != none) {
+    rows.push([实验地点])
+    rows.push(place)
+  }
+  if (teacher != none) {
+    rows.push([指导教师])
+    rows.push(teacher)
+  }
+  if (cover_date != none) {
+    rows.push([报告日期])
+    rows.push(cover_date)
+  }
+  align(
+    center,
+    box(width: 75%)[
+      #set text(size: 1.2em)
+      #tablex(
+        columns: (6.5em + 5pt, 1fr),
+        align: center + horizon,
+        stroke: 0pt,
+        // stroke: 0.5pt + red, // this line is just for testing
+        inset: 1pt,
+        map-cells: cell => {
+          if (cell.x == 0) {
+            _underlined_cell([#cell.content#"："], color: white)
+          } else {
+            _underlined_cell(cell.content, color: black)
+          }
+        },
+        ..rows,
+      )
+    ],
+  )
+  v(2fr)
   pagebreak()
   set page(numbering: "1 / 1")
 
@@ -612,16 +612,14 @@
     },
   )
 
-  
-    
 
-    show outline.entry.where(level: 1): it => {
-      v(12pt, weak: true)
-      strong(it)
-    }
+  show outline.entry.where(level: 1): it => {
+    v(12pt, weak: true)
+    strong(it)
+  }
 
-    outline(indent: 2em)
-    pagebreak()
+  outline(indent: 2em)
+  pagebreak()
 
   make-title(
     title: title,
@@ -630,8 +628,252 @@
     abstract: abstract,
     keywords: keywords,
   )
-  
+
 
   // 正文内容
   body
 }
+
+
+
+#let blockx(it, name: "", color: red, theme: none) = {
+  context {
+    {
+      let _inset = 0.8em
+      let _color = color.darken(5%)
+      v(0.2em)
+      block(below: 1em, stroke: 0.5pt + _color, radius: 3pt, width: 100%, inset: _inset)[
+        #place(
+          top + left,
+          dy: -6pt - _inset, // Account for inset of block
+          dx: 8pt - _inset,
+          block(fill: white, inset: 2pt)[
+            #set text(font: "Noto Sans", fill: _color)
+            #name
+          ],
+        )
+        #set text(fill: _color)
+        #set par(first-line-indent: 0em)
+        #it
+      ]
+    }
+  }
+}
+
+#let Theorem(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Theorem")
+  },
+  color: rgb(0, 90, 239),
+)
+
+#let example(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Example")
+  },
+  color: gray.darken(60%),
+)
+#let proof(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Proof")
+  },
+  color: rgb(120, 120, 120),
+)
+#let abstract(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Abstract")
+  },
+  color: rgb(0, 133, 143),
+)
+#let summary(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Summary")
+  },
+  color: rgb(0, 133, 143),
+)
+#let info(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Info")
+  },
+  color: rgb(68, 115, 218),
+)
+#let note(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Note")
+  },
+  color: rgb(68, 115, 218),
+)
+#let tip(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Tip")
+  },
+  color: rgb(0, 133, 91),
+)
+#let hint(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Hint")
+  },
+  color: rgb(0, 133, 91),
+)
+#let success(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Success")
+  },
+  color: rgb(62, 138, 0),
+)
+#let important(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Important")
+  },
+  color: rgb(62, 138, 0),
+)
+#let help(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Help")
+  },
+  color: rgb(153, 110, 36),
+)
+#let warning(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Warning")
+  },
+  color: rgb(184, 95, 0),
+)
+#let attention(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Attention")
+  },
+  color: rgb(216, 58, 49),
+)
+#let caution(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Caution")
+  },
+  color: rgb(216, 58, 49),
+)
+#let failure(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Failure")
+  },
+  color: rgb(216, 58, 49),
+)
+#let danger(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Danger")
+  },
+  color: rgb(216, 58, 49),
+)
+#let error(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Error")
+  },
+  color: rgb(216, 58, 49),
+)
+#let bug(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Bug")
+  },
+  color: rgb(204, 51, 153),
+)
+#let quote(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Quote")
+  },
+  color: rgb(132, 90, 231),
+)
+#let Cite(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Cite")
+  },
+  color: rgb(132, 90, 231),
+)
+#let experiment(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Experiment")
+  },
+  color: rgb(132, 90, 231),
+)
+#let question(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Question")
+  },
+  color: rgb(132, 90, 231),
+)
+#let analysis(it, name: none) = blockx(
+  it,
+  name: if (name != none) {
+    strong(name)
+  } else {
+    strong("Analysis")
+  },
+  color: rgb(0, 133, 91),
+)
